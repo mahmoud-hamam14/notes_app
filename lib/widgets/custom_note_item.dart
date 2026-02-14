@@ -31,7 +31,7 @@ class CustomNoteItem extends StatelessWidget {
               child: Text(
                 'Build your career with Tharwat samy',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   fontWeight: FontWeight.w500,
                   color: Colors.black.withOpacity(0.6),
                 ),
@@ -52,7 +52,7 @@ class CustomNoteItem extends StatelessWidget {
               'may 20, 2024',
               style: TextStyle(
                 color: Colors.black.withOpacity(0.6),
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.w400,
               ),
             ),
