@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notes_app/constants.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/notes_view.dart';
 
 void main() async {
@@ -9,6 +10,10 @@ void main() async {
   await Hive.openBox(
     kNotesBox,
   ); // Open the Hive box named 'notes_box'. This is necessary to access the data stored in this box.
+
+  Hive.registerAdapter(
+    NoteModelAdapter(),
+  ); // Register the NoteModelAdapter with Hive. This is necessary to allow Hive to serialize and deserialize NoteModel objects when storing and retrieving data from the 'notes_box'.
 
   runApp(const NotesApp());
 }
