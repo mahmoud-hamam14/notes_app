@@ -1,80 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:notes_app/widgets/custom_bottom.dart';
-import 'package:notes_app/widgets/custom_text_field.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
+import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:notes_app/widgets/add_note_form.dart';
 
 class AddNoteBottomSheet extends StatelessWidget {
   const AddNoteBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
+    return Padding(
       padding: EdgeInsets.symmetric(horizontal: 16),
-      child: SingleChildScrollView(child: AddNoteForm()),
-    );
-  }
-}
+      child: SingleChildScrollView(
+        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+          listener: (context, state) {
+            // if the new state is AddNoteSuccess, it will pop the current route from the navigation stack, effectively closing the bottom sheet.
+            if (state is AddNoteSuccess) {
+              Navigator.pop(context);
+            }
+            // if the new state is AddNoteFailure, it will print an error message to the console that includes the error message from the state. This allows you to see what went wrong when trying to add a note.
+            if (state is AddNoteFailure) {
+              print('failed to add note: ${state.errorMessage}');
+            }
+          },
+          builder: (context, state) {
+            return ModalProgressHUD(
+              inAsyncCall: // The inAsyncCall property of ModalProgressHUD is set to true when the state is AddNoteLoading, and false otherwise. This means that the loading indicator will be displayed when the state is AddNoteLoading, and hidden when the state is not AddNoteLoading.
+                  state is AddNoteLoading ? true : false,
 
-class AddNoteForm extends StatefulWidget {
-  const AddNoteForm({super.key});
-
-  @override
-  State<AddNoteForm> createState() => _AddNoteFormState();
-}
-
-class _AddNoteFormState extends State<AddNoteForm> {
-  final GlobalKey<FormState> formKey = GlobalKey();
-  // Create a GlobalKey to identify the form and access its state. This is necessary for form validation and other form-related operations.
-
-  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
-  // Initialize the autovalidateMode variable to AutovalidateMode.disabled. This is used to control when the form should automatically validate its fields.
-
-  String? title, subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: formKey,
-      autovalidateMode: autovalidateMode,
-      child: Column(
-        children: [
-          const SizedBox(height: 32),
-
-          CustomTextField(
-            onSaved: (value) {
-              title = value;
-            },
-
-            hintText: 'title',
-          ),
-
-          const SizedBox(height: 16),
-
-          CustomTextField(
-            onSaved: (value) {
-              subtitle = value;
-            },
-
-            hintText: 'subtitle',
-            maxLines: 5,
-          ),
-
-          const SizedBox(height: 32),
-
-          CustomBottom(
-            onTap: () {
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-                // If the form is valid, save the form state. This will trigger the onSaved callbacks for each form field, allowing you to capture the input values.
-              } else {
-                autovalidateMode = AutovalidateMode.always;
-                setState(() {});
-                // If the form is not valid, set the autovalidateMode to AutovalidateMode.always and call setState to trigger a rebuild of the widget. This will cause the form to automatically validate its fields and display any validation errors.
-              }
-            },
-          ),
-
-          const SizedBox(height: 16),
-        ],
+              child: const AddNoteForm(),
+            );
+          },
+        ),
       ),
     );
   }
