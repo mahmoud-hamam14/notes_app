@@ -4,10 +4,14 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:notes_app/constants.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
+import 'package:notes_app/simple_bloc_observer.dart';
 import 'package:notes_app/views/notes_view.dart';
 
 void main() async {
   await Hive.initFlutter(); // Initialize Hive for Flutter. This is necessary before using Hive to store data in the app.
+
+  Bloc.observer =
+      SimpleBlocObserver(); // Set the Bloc observer to an instance of SimpleBlocObserver. This allows you to observe and log the behavior of Blocs and Cubits in the app, such as state changes and events.
 
   await Hive.openBox(
     kNotesBox,
