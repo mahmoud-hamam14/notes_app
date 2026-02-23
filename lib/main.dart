@@ -13,13 +13,13 @@ void main() async {
   Bloc.observer =
       SimpleBlocObserver(); // Set the Bloc observer to an instance of SimpleBlocObserver. This allows you to observe and log the behavior of Blocs and Cubits in the app, such as state changes and events.
 
-  await Hive.openBox<NoteModel>(
-    kNotesBox,
-  ); // Open the Hive box named 'notes_box'. This is necessary to access the data stored in this box.
-
   Hive.registerAdapter(
     NoteModelAdapter(),
   ); // Register the NoteModelAdapter with Hive. This is necessary to allow Hive to serialize and deserialize NoteModel objects when storing and retrieving data from the 'notes_box'.
+
+  await Hive.openBox<NoteModel>(
+    kNotesBox,
+  ); // Open the Hive box named 'notes_box'. This is necessary to access the data stored in this box.
 
   runApp(const NotesApp());
 }
@@ -29,16 +29,10 @@ class NotesApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      // Use MultiBlocProvider to provide multiple Bloc or Cubit instances to the widget tree. In this case, we are providing an instance of AddNoteCubit.
-      providers: [
-        BlocProvider(create: (context) => AddNoteCubit()),
-      ], // Provide an instance of AddNoteCubit to the widget tree. This allows any widget in the tree to access the AddNoteCubit instance and its state.
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(brightness: Brightness.dark, fontFamily: 'Poppins'),
-        home: const NotesView(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(brightness: Brightness.dark, fontFamily: 'Poppins'),
+      home: const NotesView(),
     );
   }
 }
