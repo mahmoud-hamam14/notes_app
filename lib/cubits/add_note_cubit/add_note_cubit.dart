@@ -16,11 +16,11 @@ class AddNoteCubit extends Cubit<AddNoteState> {
       var notesBox = Hive.box<NoteModel>(
         kNotesBox,
       ); // Get a reference to the Hive box that stores NoteModel objects. This is necessary to perform operations on the box, such as adding a new note.
-      emit(AddNoteSuccess());
 
       await notesBox.add(
         note,
       ); // Add the provided note to the Hive box. This is an asynchronous operation, so we await its completion. If the operation is successful, the note will be stored in the box and can be retrieved later.
+      emit(AddNoteSuccess());
     } catch (e) {
       emit(AddNoteFailure(e.toString()));
     }

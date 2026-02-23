@@ -13,7 +13,7 @@ void main() async {
   Bloc.observer =
       SimpleBlocObserver(); // Set the Bloc observer to an instance of SimpleBlocObserver. This allows you to observe and log the behavior of Blocs and Cubits in the app, such as state changes and events.
 
-  await Hive.openBox(
+  await Hive.openBox<NoteModel>(
     kNotesBox,
   ); // Open the Hive box named 'notes_box'. This is necessary to access the data stored in this box.
 
