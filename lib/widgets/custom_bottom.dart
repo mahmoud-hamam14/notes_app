@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:notes_app/constants.dart';
 
 class CustomBottom extends StatelessWidget {
-  const CustomBottom({super.key, this.onTap});
+  const CustomBottom({super.key, this.onTap, this.isLoading = false});
+
+  final bool isLoading;
 
   final void Function()? onTap;
 
@@ -17,15 +19,24 @@ class CustomBottom extends StatelessWidget {
         child: SizedBox(
           width: MediaQuery.of(context).size.width,
           height: 55,
-          child: const Center(
-            child: Text(
-              'Add',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          child: Center(
+            child:
+                isLoading
+                    ? SizedBox(
+                      height: 24,
+                      width: 24,
+                      child: const CircularProgressIndicator(
+                        color: Colors.black,
+                      ),
+                    )
+                    : const Text(
+                      'Add',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
           ),
         ),
       ),

@@ -51,26 +51,31 @@ class _AddNoteFormState extends State<AddNoteForm> {
 
           const SizedBox(height: 32),
 
-          CustomBottom(
-            onTap: () {
-              if (formKey.currentState!.validate()) {
-                formKey.currentState!.save();
-                // If the form is valid, save the form state. This will trigger the onSaved callbacks for each form field, allowing you to capture the input values.
+          BlocBuilder<AddNoteCubit, AddNoteState>(
+            builder: (context, state) {
+              return CustomBottom(
+                isLoading: state is AddNoteLoading ? true : false,
+                onTap: () {
+                  if (formKey.currentState!.validate()) {
+                    formKey.currentState!.save();
+                    // If the form is valid, save the form state. This will trigger the onSaved callbacks for each form field, allowing you to capture the input values.
 
-                var noteModel = NoteModel(
-                  title: title!,
-                  subtitle: subtitle!,
-                  date: DateTime.now().toString(),
-                  color: Colors.blue.toARGB32(),
-                );
-                BlocProvider.of<AddNoteCubit>(context).addNote(
-                  noteModel,
-                ); // Create a new NoteModel instance with the captured title and subtitle, and call the addNote method of the AddNoteCubit to add the note to the app's state.
-              } else {
-                autovalidateMode = AutovalidateMode.always;
-                setState(() {});
-                // If the form is not valid, set the autovalidateMode to AutovalidateMode.always and call setState to trigger a rebuild of the widget. This will cause the form to automatically validate its fields and display any validation errors.
-              }
+                    var noteModel = NoteModel(
+                      title: title!,
+                      subtitle: subtitle!,
+                      date: DateTime.now().toString(),
+                      color: Colors.blue.toARGB32(),
+                    );
+                    BlocProvider.of<AddNoteCubit>(context).addNote(
+                      noteModel,
+                    ); // Create a new NoteModel instance with the captured title and subtitle, and call the addNote method of the AddNoteCubit to add the note to the app's state.
+                  } else {
+                    autovalidateMode = AutovalidateMode.always;
+                    setState(() {});
+                    // If the form is not valid, set the autovalidateMode to AutovalidateMode.always and call setState to trigger a rebuild of the widget. This will cause the form to automatically validate its fields and display any validation errors.
+                  }
+                },
+              );
             },
           ),
 
