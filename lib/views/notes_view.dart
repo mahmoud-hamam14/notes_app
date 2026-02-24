@@ -12,7 +12,7 @@ class NotesView extends StatelessWidget {
         // backgroundColor: Colors.blueAccent,
         onPressed: () {
           showModalBottomSheet(
-            // Show the bottom sheet when the button is pressed
+            isScrollControlled: true,
             shape: RoundedRectangleBorder(
               // Add rounded corners to the bottom sheet
               borderRadius: BorderRadius.circular(16),
