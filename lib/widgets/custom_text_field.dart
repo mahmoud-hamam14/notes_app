@@ -7,11 +7,14 @@ class CustomTextField extends StatelessWidget {
     required this.hintText,
     this.maxLines = 1,
     this.onSaved,
+    this.onChanged,
   });
 
   final String hintText;
 
   final int maxLines;
+
+  final Function(String)? onChanged;
 
   final void Function(String?)?
   onSaved; // Define an optional onSaved callback that takes a String? parameter. This allows the parent widget to handle the saving of the text field's value when the form is saved.
@@ -19,6 +22,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onChanged: onChanged, // Set the onChanged callback to the onChanged parameter passed to the CustomTextField. This allows the parent widget to handle changes to the text field's value in real-time.
       onSaved:
           onSaved, // Set the onSaved callback to the onSaved parameter passed to the CustomTextField. This allows the parent widget to handle the saving of the text field's value when the form is saved.
 
