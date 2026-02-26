@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/widgets/custom_bottom.dart';
@@ -60,10 +61,15 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     formKey.currentState!.save();
                     // If the form is valid, save the form state. This will trigger the onSaved callbacks for each form field, allowing you to capture the input values.
 
+                    var currentDate = DateTime.now();
+
+                    var formattedCurrentDate = DateFormat.yMd().format(
+                      currentDate,
+                    );
                     var noteModel = NoteModel(
                       title: title!,
                       subtitle: subtitle!,
-                      date: DateTime.now().toIso8601String().split('T')[0],
+                      date: formattedCurrentDate,
                       color: Colors.blue.toARGB32(),
                     );
                     BlocProvider.of<AddNoteCubit>(context).addNote(
