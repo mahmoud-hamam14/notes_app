@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:notes_app/models/note_model.dart';
 import 'package:notes_app/views/edit_note_view.dart';
 
 class CustomNoteItem extends StatelessWidget {
-  const CustomNoteItem({super.key});
+  const CustomNoteItem({super.key, required this.note});
+
+  final NoteModel note;
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +24,7 @@ class CustomNoteItem extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.only(left: 20, top: 24, bottom: 24),
         decoration: BoxDecoration(
-          color: Color(0xffFFCC55),
+          color: Color(note.color),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
@@ -30,8 +33,8 @@ class CustomNoteItem extends StatelessWidget {
             ListTile(
               // Note: ListTile is a widget that displays a single row with some text and an optional leading and trailing icon.
               title: Text(
-                'Flutter Tips',
-                style: TextStyle(
+                note.title,
+                style: const TextStyle(
                   fontSize: 26,
                   fontWeight: FontWeight.w500,
                   color: Colors.black,
@@ -41,7 +44,7 @@ class CustomNoteItem extends StatelessWidget {
               subtitle: Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(
-                  'Build your career with Tharwat samy',
+                  note.subtitle,
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -61,7 +64,7 @@ class CustomNoteItem extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 33, top: 16),
               child: Text(
-                'may 20, 2024',
+                note.date,
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.6),
                   fontSize: 16,

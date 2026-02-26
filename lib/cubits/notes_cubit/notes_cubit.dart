@@ -7,7 +7,9 @@ import 'package:notes_app/models/note_model.dart';
 part 'notes_state.dart';
 
 class NotesCubit extends Cubit<NotesState> {
-  NotesCubit() : super(NotesInitial());
+  NotesCubit() : super(NotesInitial()) {
+    fetchAllNotes();
+  }
 
   List<NoteModel>? notes;
 
@@ -18,4 +20,3 @@ class NotesCubit extends Cubit<NotesState> {
     // Retrieve all the notes from the Hive box and convert them to a list.
   }
 }
- 
