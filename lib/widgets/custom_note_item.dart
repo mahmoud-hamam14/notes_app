@@ -73,8 +73,8 @@ class CustomNoteItem extends StatelessWidget {
                 note.date,
                 style: TextStyle(
                   color: Colors.black.withOpacity(0.6),
-                  fontSize: 16,
-                  fontWeight: FontWeight.w400,
+                  fontSize: 17,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),

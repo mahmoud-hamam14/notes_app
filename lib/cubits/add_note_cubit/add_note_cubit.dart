@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:meta/meta.dart';
 import 'package:notes_app/constants.dart';
@@ -9,7 +10,11 @@ part 'add_note_state.dart';
 class AddNoteCubit extends Cubit<AddNoteState> {
   AddNoteCubit() : super(AddNoteInitial());
 
+  Color color = Colors.blue;
+
   addNote(NoteModel note) async {
+    // ignore: deprecated_member_use
+    note.color = color.value;
     // Define an asynchronous method named addNote that takes a NoteModel object as a parameter. This method will be responsible for adding a note to the Hive box and managing the state of the operation.
     emit(AddNoteLoading());
     try {
